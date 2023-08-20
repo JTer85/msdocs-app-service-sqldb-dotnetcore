@@ -5,8 +5,13 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add database context and cache
 builder.Services.AddDbContext<MyDatabaseContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("MyDbConnection")));
-builder.Services.AddDistributedMemoryCache();
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Data Source=webappdbjl-server.database.windows.net,1433;Initial Catalog=webappdbjl-database;User ID=webappdbjl-server-admin;Password=F7N588J33PHS0IZB$")));
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+options.Configuration = builder.Configuration["webappdbjl-cache.redis.cache.windows.net:6380,password=hutBgmbL1N3lwxs6ad5pgbO6HCrjK2H36AzCaNWgRHs=,ssl=True,defaultDatabase=0
+"];
+options.InstanceName = "SampleInstance";
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
